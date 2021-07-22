@@ -34,14 +34,25 @@ const App = () => {
 
   };
 
+  /*
+  //Actualizar el video selecionado
   const onVideoSelect = (video) => {
     console.log("From the App!!", video);
-    //Actualizar el video selecionado
     //this.setState({ selectedVideo: video });
     setSelectedVideo(video);
+  };*/
+  /*
+     <VideoList
+                onVideoSelect={(video) => setSelectedVideo(video)}
+                videos={videos}
+              />
 
-
-  };
+      <VideoList
+                onVideoSelect={setSelectedVideo}
+                videos={videos}
+              />
+              
+  */
 
   return (
     <div className="colorPage">
@@ -54,7 +65,7 @@ const App = () => {
             </div>
             <div className="five wide column">
               <VideoList
-                onVideoSelect={onVideoSelect}
+                onVideoSelect={setSelectedVideo}
                 videos={videos}
               />
             </div>
