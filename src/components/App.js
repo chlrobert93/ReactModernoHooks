@@ -1,69 +1,67 @@
-import React from 'react';
-import './VideoItem.css';
-import SearchBar from './SearchBar';
-import youtube from '../apis/youtube';
-import VideoList from './VideoList';
-import VideoDetail from './VideoDetail';
+import React, { useState, useEffect } from "react";
+import "./VideoItem.css";
+import SearchBar from "./SearchBar";
+import youtube from "../apis/youtube";
+import VideoList from "./VideoList";
+import VideoDetail from "./VideoDetail";
 
+//Componenete de función
+const App = () => {
 
-class App extends React.Component{
+  //setVideos para configurar videos para actualizar nuestros videos
+  //setSelectedVideo para configurar el video seleccionado para actualizar el state de videos seleccionados
+  const [videos, setVideos] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
-  state = {videos: [], slectedVideo: null };
+  useEffect(() => {
+    onTermSubmit("Iron Maiden - The Trooper (En Vivo!) ");
+  }, []);
 
+  //Terminos de envio
+  const onTermSubmit = async (term) => {
+    console.log(term);
 
-  componentDidMount(){
-     this.onTermSubmit('Iron Maiden - The Trooper (En Vivo!) ');  
-  };
-
-    //Terminos de envio
-  onTermSubmit = async term => {
-   console.log(term);
-
-   //Instancia preconfigurada axios ruta para enviar una solicitud
-  const response = await youtube.get('/search',{
-       params:{
-           q: term
-       }
-   });
-
-     console.log(response);
-     this.setState({ videos: response.data.items,
-        selectedVideo: response.data.items[0]
+    //Instancia preconfigurada axios ruta para enviar una solicitud
+    const response = await youtube.get("/search", {
+      params: {
+        q: term,
+      },
     });
-  };
-//v= videos
-//callback
-  onVideoSelect = video => {
-      
-      console.log('From the App!!',video);
-      //Actualizar el video selecionado
-      this.setState({selectedVideo: video});
 
-      //Seleccionar el primer video
+    console.log(response);
+    setVideos(response.data.items);
+    setSelectedVideo(response.data.items[0]);
 
-    
   };
 
-    render() {
-        return (
+  const onVideoSelect = (video) => {
+    console.log("From the App!!", video);
+    //Actualizar el video selecionado
+    //this.setState({ selectedVideo: video });
+    setSelectedVideo(video);
 
-          <div className="colorPage"> 
-            <div className="ui container" style={{marginTop: '10px'}}>
-                <SearchBar onFormSubmit={this.onTermSubmit} />
-                <div className="ui stackable grid">
-                   <div className="ui row">
-                       <div className="eleven wide column">
-                          <VideoDetail video={this.state.selectedVideo}/>     
-                       </div>
-                       <div className="five wide column">
-                          <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
-                       </div>
-                   </div>
-                </div>
-            </div>
-            </div>
-        );
-    }
-}
 
+  };
+
+  return (
+    <div className="colorPage">
+      <div className="ui container" style={{ marginTop: "10px" }}>
+        <SearchBar onFormSubmit={onTermSubmit} />
+        <div className="ui stackable grid">
+          <div className="ui row">
+            <div className="eleven wide column">
+              <VideoDetail video={selectedVideo} />
+            </div>
+            <div className="five wide column">
+              <VideoList
+                onVideoSelect={onVideoSelect}
+                videos={videos}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 export default App;
