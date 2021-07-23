@@ -1,5 +1,5 @@
-import { useState, useEffec} from 'react';
-import youtube from '../apis/you tube';
+import { useState, useEffect} from 'react';
+import youtube from '../apis/youtube';
 
 const useVideos = (defaultSearchTerm) => {
   //setVideos para configurar videos para actualizar nuestros videos
@@ -9,7 +9,7 @@ const useVideos = (defaultSearchTerm) => {
   useEffect(() => {
     search(defaultSearchTerm);
   }, []);
-
+  
    //Terminos de envio
    const search = async (term) => {
     console.log(term);

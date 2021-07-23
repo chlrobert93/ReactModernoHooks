@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./VideoItem.css";
 import SearchBar from "./SearchBar";
-import youtube from "../apis/youtube";
 import VideoList from "./VideoList";
 import VideoDetail from "./VideoDetail";
+import useVideos from '../hooks/usevideos';
 
 //Componenete de función
 const App = () => {
 
 
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [videos, search] = useVideos('El general');
+
+  useEffect(() => {
+
+    setSelectedVideo(videos[0]);
+
+  },[videos]);
 
 
-
-
-    //setSelectedVideo(response.data.items[0]);
 
   
 
@@ -41,7 +45,7 @@ const App = () => {
   return (
     <div className="colorPage">
       <div className="ui container" style={{ marginTop: "10px" }}>
-        <SearchBar onFormSubmit={onTermSubmit} />
+        <SearchBar onFormSubmit={search} />
         <div className="ui stackable grid">
           <div className="ui row">
             <div className="eleven wide column">
