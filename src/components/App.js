@@ -8,31 +8,15 @@ import VideoDetail from "./VideoDetail";
 //Componenete de función
 const App = () => {
 
-  //setVideos para configurar videos para actualizar nuestros videos
-  //setSelectedVideo para configurar el video seleccionado para actualizar el state de videos seleccionados
-  const [videos, setVideos] = useState([]);
+
   const [selectedVideo, setSelectedVideo] = useState(null);
 
-  useEffect(() => {
-    onTermSubmit("Iron Maiden - The Trooper (En Vivo!) ");
-  }, []);
 
-  //Terminos de envio
-  const onTermSubmit = async (term) => {
-    console.log(term);
 
-    //Instancia preconfigurada axios ruta para enviar una solicitud
-    const response = await youtube.get("/search", {
-      params: {
-        q: term,
-      },
-    });
 
-    console.log(response);
-    setVideos(response.data.items);
-    setSelectedVideo(response.data.items[0]);
+    //setSelectedVideo(response.data.items[0]);
 
-  };
+  
 
   /*
   //Actualizar el video selecionado
